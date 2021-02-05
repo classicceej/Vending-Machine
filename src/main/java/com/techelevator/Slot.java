@@ -14,7 +14,7 @@ public class Slot {
 
 	public void sellOut() {
 		if(getSlotItem().getQuantity() == 0) {
-			SoldOut = true;
+			SoldOut = true; //wrong
 		}
 	}
 	
