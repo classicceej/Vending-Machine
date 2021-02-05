@@ -1,7 +1,8 @@
 package com.techelevator;
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -12,7 +13,7 @@ public class Inventory {
 	private Map <String, Slot> stock;
 	
 	public Inventory() {
-		stock = new TreeMap<String, Slot>();
+		stock = new LinkedHashMap<String, Slot>();
 		
 		String path = "vendingmachine.csv";
 		File inputFile = new File(path);
@@ -20,7 +21,6 @@ public class Inventory {
 			while(goodies.hasNextLine()) {
 				String currentLine = goodies.nextLine();
 				String[] info = currentLine.split("\\|");
-				System.out.println(info[0]);
 				if (info[3].contains("Chip")) {
 					Chip vendChip = new Chip(info[1], Double.parseDouble(info[2]));
 					Slot chipSlot = new Slot(vendChip);
@@ -40,6 +40,7 @@ public class Inventory {
 				} else {
 					System.out.println("error");
 				}
+				
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

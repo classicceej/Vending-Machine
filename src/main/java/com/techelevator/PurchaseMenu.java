@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class PurchaseMenu extends MenuScanner {
+public class PurchaseMenu extends Software {
 	
 	private VendingMachine hardware;
 
