@@ -2,25 +2,31 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.KeyStore.Entry;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 
 
 public class Inventory {
-
+	
 	private Map <String, Slot> stock;
 	
 	public Inventory() {
-		stock = new TreeMap<String, Slot>();
+		stock = new HashMap<String, Slot>();
 		
 		String path = "vendingmachine.csv";
 		File inputFile = new File(path);
 		try(Scanner goodies = new Scanner(inputFile)){
 			while(goodies.hasNextLine()) {
 				String currentLine = goodies.nextLine();
-				String[] info = currentLine.split("|");
-				if (info[3].contains("Chips")) {
+				String[] info = currentLine.split("\\|");
+				if (info[3].contains("Chip")) {
 					Chip vendChip = new Chip(info[1], Double.parseDouble(info[2]));
 					Slot chipSlot = new Slot(vendChip);
 					stock.put(info[0], chipSlot);
@@ -37,7 +43,7 @@ public class Inventory {
 					Slot candySlot = new Slot(vendCandy);
 					stock.put(info[0], candySlot);
 				} else {
-					System.out.println("Error!");
+					System.out.println("Error");
 				}
 			
 			}
@@ -45,8 +51,7 @@ public class Inventory {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			System.out.println(stock.keySet());
-			System.out.println(stock.values());
+			
 			
 		}
 		
@@ -56,9 +61,10 @@ public class Inventory {
 		return stock;
 	}
 	
+	     
+	  	
+	
+	}
 	
 	
-	
-	
-	
-}
+

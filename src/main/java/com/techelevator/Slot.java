@@ -25,6 +25,24 @@ public class Slot {
 	public boolean isSoldOut() {
 		return SoldOut;
 	}
+
+
+	public double getPrice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public int getQuantity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	public Object getStock() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
