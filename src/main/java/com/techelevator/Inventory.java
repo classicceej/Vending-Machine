@@ -19,8 +19,9 @@ public class Inventory {
 		try(Scanner goodies = new Scanner(inputFile)){
 			while(goodies.hasNextLine()) {
 				String currentLine = goodies.nextLine();
-				String[] info = currentLine.split("|");
-				if (info[3].contains("Chips")) {
+				String[] info = currentLine.split("\\|");
+				System.out.println(info[0]);
+				if (info[3].contains("Chip")) {
 					Chip vendChip = new Chip(info[1], Double.parseDouble(info[2]));
 					Slot chipSlot = new Slot(vendChip);
 					stock.put(info[0], chipSlot);
@@ -37,19 +38,15 @@ public class Inventory {
 					Slot candySlot = new Slot(vendCandy);
 					stock.put(info[0], candySlot);
 				} else {
-					System.out.println("Error!");
+					System.out.println("error");
 				}
-			
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			System.out.println(stock.keySet());
-			System.out.println(stock.values());
-			
 		}
-		
+
 	}
 
 	public Map <String, Slot> getStock() {

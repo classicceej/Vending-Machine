@@ -1,5 +1,24 @@
 package com.techelevator;
 
-public class PurchaseMenu {
+public class PurchaseMenu extends MenuScanner {
+	
+	private VendingMachine hardware;
 
+	PurchaseMenu(VendingMachine hadware){
+	this.hardware = hardware;
+	}
+
+	public void feed() {
+		System.out.println("How much money are you inserting? >>>");
+		int insert = scan.nextInt();
+		double dubInsert = insert;
+		getHardware().CurrentMoneyProvided() += dubInsert; //+= dubInsert;
+		getHardware().getUser().getBankAccount() -= dubInsert;
+		System.out.println(getHardware().getCurrentMoneyProvided());
+	}
+
+	public VendingMachine getHardware() {
+		return hardware;
+	}
+	
 }
