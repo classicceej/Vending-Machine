@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Software {
 
 	public static void main(String[] args) {
-<<<<<<< HEAD
+
 		
 		
 		
@@ -16,10 +16,11 @@ public class Software {
         	int userInput = scan.nextInt();
         	
         	if (userInput == 1) {    //displaying
-        		//for(String s : );   put the list of items to s
-        		System.out.println(s);
-        		
+        		//for(String s :  );   
+        		System.out.println();
+        	}
         		if (userInput == 3 ) {// exit the application
+        			System.out.println("Thank You");
         			System.exit(0);
         		}
         		
@@ -28,14 +29,14 @@ public class Software {
         		}
         		
         		    if(userInput == 2) {  //Purchases
-        			System.out.println("(1) Feed Money > (2) Select Product >(3) Finish Transaction");
+        			System.out.println("(1) Feed Money > (2) Select Product > (3) Finish Transaction");
         			int inputNumber = scan.nextInt();
         			
         			     if (inputNumber == 1) {  // purchases option 1 Feed money
         			    	 System.out.println("Please Select the amonut of Dollar");
         			    	 int amount = scan.nextInt();
         			    	 int balance;
-        			    	 balance += amount /100;
+        			    	 //balance += amount ;
         			    	 System.out.println ("Current Money provided: $" + amount);
         			    	 
         			     }
@@ -46,23 +47,23 @@ public class Software {
         			     }
         			     
         			     if (inputNumber == 3) {
-        			    	 System.out.println("Your Change is:") ;//provide change to user and complete the transaction
+        			    	 System.out.println("Your Change is: " ) ;//provide change to user and complete the transaction
         			     }
         			
         		}
         	}
         }
-=======
 
-		Scanner keyboard = new Scanner(System.in);
 
-		VendingMachine thisMachine = new VendingMachine();
+		//Scanner keyboard = new Scanner(System.in);
+
+		//VendingMachine thisMachine = new VendingMachine();
 
 		// Main Menu()
 
 		// Display Vending Machine Items
 
-		thisMachine.DisplayVendingMachineItems();
+		//thisMachine.DisplayVendingMachineItems();
 
 		// Purchase
 		// to purchase menu
@@ -89,7 +90,7 @@ public class Software {
 		// CMP = 0
 		// Return to Main
 
->>>>>>> 7fd032507260bf58d5e0aa7b5f9aa53f8966107b
-	}
+
+	
 
 }
