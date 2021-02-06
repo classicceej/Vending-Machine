@@ -1,35 +1,9 @@
 package com.techelevator;
-<<<<<<< HEAD
-import java.io.File;
-import java.util.Scanner;
-
-public class VendingMachine {
-     public static void main (String[] args) {
-    
-    	 
-    //Scanner keyboard = new Scanner (System.in);	 
-    //File inputFile = new File ("vendingmachine.csv");
-    
-    
-   // while(true) {
-    	//Sytsem.out.println ()
-   // }
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 
-     }   	 
-     
-} 
-=======
 
 public class VendingMachine {
 	private Inventory contents;
 	private double currentMoneyProvided = 0;
+	private int fedMoney = 0;
 	private double change = 0;
 	private Customer user;
 	
@@ -50,6 +24,41 @@ public class VendingMachine {
 //	}
 	
 	
+	public void setCurrentMoneyProvided(double currentMoneyProvided) {
+		this.currentMoneyProvided = currentMoneyProvided;
+	}
+
+
+	public void feedMoney() {
+		currentMoneyProvided += getFedMoney();
+	}
+
+	
+	public int getFedMoney() {
+		return fedMoney;
+	}
+
+
+	public void setFedMoney(int fedMoney) {
+		this.fedMoney = fedMoney;
+	}
+
+
+	public void DisplayVendingMachineItems(){
+		for (String k : getContents().getStock().keySet()) {
+			Slot v = getContents().getStock().get(k);
+			if (v.isSoldOut()) {
+				System.out.print(v.getSlotItem().getName() + "\t\t" + v.getSlotItem().getName() + " IS SOLD OUT!" + "\n");
+			} else {
+				System.out.print(v.getSlotItem().getName() + "\t\t" + v.getSlotItem().getQuantity() + "\n");
+			}
+		}
+	}
+
+
+	public Customer getUser() {
+		return user;
+	}
 	public Inventory getContents() {
 		return contents;
 	}
@@ -60,22 +69,5 @@ public class VendingMachine {
 		return change;
 	}
 	
-	public void DisplayVendingMachineItems(){
-		for (String k : getContents().getStock().keySet()) {
-			Slot v = getContents().getStock().get(k);
-			if (v.isSoldOut()) {
-				System.out.print(v.getSlotItem().getName() + "\t" + v.getSlotItem().getName() + " IS SOLD OUT!" + "\n");
-			} else {
-				System.out.print(v.getSlotItem().getName() + "\t" + v.getSlotItem().getQuantity() + "\n");
-			}
-		}
-	}
-
-
-
-	public Customer getUser() {
-		return user;
-	}
-	
 }
->>>>>>> 7fd032507260bf58d5e0aa7b5f9aa53f8966107b
+
