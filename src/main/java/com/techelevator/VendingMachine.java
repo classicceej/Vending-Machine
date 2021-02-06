@@ -4,7 +4,7 @@ public class VendingMachine {
 	private Inventory contents;
 	private double currentMoneyProvided = 0;
 	private int fedMoney = 0;
-	private double change = 0;
+	
 	private Customer user;
 	
 	public VendingMachine(){
@@ -15,7 +15,7 @@ public class VendingMachine {
 	
 	public void returnChange(){
 		currentMoneyProvided = 0;
-		change = 0;
+	
 		//Change must be dispensed in smallest amount of coins
 	}
 	
@@ -65,9 +65,6 @@ public class VendingMachine {
 	public double getCurrentMoneyProvided() {
 		return currentMoneyProvided;
 	}
-	public double getChange() {
-		return change;
-	}
-	
+
 }
 

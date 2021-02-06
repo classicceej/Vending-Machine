@@ -1,12 +1,15 @@
 package com.techelevator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 
 //import java.io.File;
 import java.util.Scanner;
@@ -17,16 +20,24 @@ public class Software {
 
 		Scanner keyboard = new Scanner(System.in);
 
+		LocalDateTime dateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-uuuu hh:mm a");
+
+		
 		String fileName = "Log.txt";
 
-		File auditFile = new File(fileName);
-		
+		File logFile = new File(fileName);
+
+		try (PrintWriter pw = new PrintWriter(logFile)) {
+			pw.print("");
+
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 		VendingMachine thisMachine = new VendingMachine();
-
-		// Main Menu()
 		Boolean mainMenu = true;
-		// Display Vending Machine Items
 
 		while (mainMenu) {
 			System.out.println("\nMake a selection: ");
@@ -38,7 +49,6 @@ public class Software {
 
 			if (response1.contains("1")) {
 				thisMachine.DisplayVendingMachineItems();
-				// RETURN TO MAIN MENU
 			} else if (response1.contains("2")) {
 				Boolean purchaseMenu = true;
 				while (purchaseMenu) {
@@ -46,22 +56,23 @@ public class Software {
 					System.out.println("(1) Feed Money");
 					System.out.println("(2) Select Product");
 					System.out.println("(3) Finish Transaction");
-					System.out.println(thisMachine.getCurrentMoneyProvided());
+					System.out.println(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()));
 
 					String response2 = keyboard.nextLine();
 
 					if (response2.contains("1")) {
-						// Feed Money
+
 						Boolean feeding = true;
 						while (feeding) {
 							System.out.println("\nEnter cash: ");
 							int moneyIn = Integer.parseInt(keyboard.nextLine());
+							//ACCOUNT FOR NULL
 
 							thisMachine.setFedMoney(moneyIn);
 
 							thisMachine.feedMoney();
-							System.out
-									.println("There is $" + BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()) + " in the machine");
+							System.out.println("There is $" + BigDecimal.valueOf((thisMachine.getCurrentMoneyProvided()))
+									+ " in the machine");
 
 							System.out.println("Enter more?  Y/N ");
 							String responseFeeding = keyboard.nextLine();
@@ -69,12 +80,26 @@ public class Software {
 							if (responseFeeding.toUpperCase().contains("N")) {
 								feeding = false;
 
-								// LOG myDT + FEED MONEY: + moneyIn(".00") + CMP
 							}
+
+							try (PrintWriter pw = new PrintWriter(new FileWriter(logFile, true))) {
+								pw.print(formatter.format(dateTime) + ":");
+								pw.print(" FEED MONEY: ");
+								pw.print(" $" + BigDecimal.valueOf(moneyIn));
+								pw.print(" $" + BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()) + "\n");
+								pw.flush();
+
+							} catch (FileNotFoundException e2) {
+
+								e2.printStackTrace();
+							} catch (IOException e1) {
+
+								e1.printStackTrace();
+							}
+
 						}
 					} else if (response2.contains("2")) {
 
-						// Select Product
 						for (String k : thisMachine.getContents().getStock().keySet()) {
 							Slot v = thisMachine.getContents().getStock().get(k);
 							System.out.println(k + "\t" + v.getSlotItem().getName());
@@ -89,20 +114,43 @@ public class Software {
 							if (thisMachine.getCurrentMoneyProvided() >= thisMachine.getContents().getStock()
 									.get(selection.toUpperCase()).getSlotItem().getPrice()) {
 
-								// LOG myDT + selectionname + selection + cmp
+								try (PrintWriter pw = new PrintWriter(new FileWriter(logFile, true))) {
+									pw.print(formatter.format(dateTime) + ": ");
+									pw.print(thisMachine.getContents().getStock().get(selection.toUpperCase()).getSlotItem().getName() + " " + selection.toUpperCase());
+									pw.print(" $" + BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()));
+									pw.flush();
+								} catch (FileNotFoundException e2) {
+
+									e2.printStackTrace();
+								} catch (IOException e1) {
+
+									e1.printStackTrace();
+								}
 
 								BigDecimal X = BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided());
 								X = (X.subtract(BigDecimal.valueOf(thisMachine.getContents().getStock()
 										.get(selection.toUpperCase()).getSlotItem().getPrice())));
 								thisMachine.setCurrentMoneyProvided(X.doubleValue());
 
-								// LOG new CMP same line
+								
+								
+								try (PrintWriter pw = new PrintWriter(new FileWriter(logFile, true))) {
+								pw.print(" $" + BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()) + "\n");
+									pw.flush();
+								} catch (FileNotFoundException e2) {
+
+									e2.printStackTrace();
+								} catch (IOException e1) {
+
+									e1.printStackTrace();
+								}
+
 
 								System.out.println(thisMachine.getContents().getStock().get(selection.toUpperCase())
 										.getSlotItem().getName() + "\t"
-										+ thisMachine.getContents().getStock().get(selection.toUpperCase())
-												.getSlotItem().getPrice());
-								System.out.println(thisMachine.getCurrentMoneyProvided());
+										+ BigDecimal.valueOf(thisMachine.getContents().getStock().get(selection.toUpperCase())
+												.getSlotItem().getPrice()));
+								System.out.println(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()));
 								System.out.println(thisMachine.getContents().getStock().get(selection.toUpperCase())
 										.getSlotItem().getMessage());
 
@@ -116,7 +164,10 @@ public class Software {
 									thisMachine.getContents().getStock().get(selection.toUpperCase()).setSoldOut(true);
 								}
 
-								// ADD TO LOG
+
+
+
+
 
 							} else {
 								System.out.println("You don't have enough money for that selection!");
@@ -126,7 +177,7 @@ public class Software {
 						}
 					} else if (response2.contains("3")) {
 
-						// LOG myDT + GIVE CHANGE: + BigDecimal(CMP) + $0.00
+
 						BigDecimal Q = new BigDecimal("0.25");
 						BigDecimal D = new BigDecimal("0.10");
 						BigDecimal N = new BigDecimal("0.05");
@@ -134,10 +185,18 @@ public class Software {
 						int countD = 0;
 						int countN = 0;
 
-						try (PrintWriter pw = new PrintWriter(fileName)) {
-							System.out.println();
-						} catch (IOException e) {
-							System.out.println("Could not open file.");
+						try (PrintWriter pw = new PrintWriter(new FileWriter(logFile, true))) {
+							pw.print(formatter.format(dateTime) + ":");
+							pw.print(" GIVE CHANGE: ");
+							pw.print(" $" + BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()));
+							pw.print(" $0.00 \n");
+							pw.flush();
+						} catch (FileNotFoundException e2) {
+
+							e2.printStackTrace();
+						} catch (IOException e1) {
+
+							e1.printStackTrace();
 						}
 
 						while ((Q.compareTo(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided())) <= 0)) {
@@ -164,10 +223,10 @@ public class Software {
 				}
 
 			} else if (response1.contains("3")) {
+				System.out.println("THANK YOU!");
 				System.exit(0);
 			} else if (response1.contains("4")) {
-				// PRINT ACCOUNT LOGS
-				// PRINT AUDIT
+
 			}
 
 		}
