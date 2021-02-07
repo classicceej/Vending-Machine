@@ -2,16 +2,26 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.KeyStore.Entry;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+//import java.util.List;
+//=======
+//import java.util.HashMap;
+import java.util.LinkedHashMap;
+
+
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class Inventory {
 
@@ -19,7 +29,11 @@ public class Inventory {
 
 	public Inventory() {
 
+
 		stock = new LinkedHashMap<String, Slot>();
+
+
+		
 
 		String path = "vendingmachine.csv";
 		File inputFile = new File(path);
@@ -45,6 +59,10 @@ public class Inventory {
 					stock.put(info[0], candySlot);
 				} else {
 
+
+					
+
+
 					System.out.println("Error");
 
 				}
@@ -52,7 +70,7 @@ public class Inventory {
 			}
 		} catch (FileNotFoundException e) {
 
-			e.printStackTrace();
+		
 
 		}
 
@@ -62,4 +80,55 @@ public class Inventory {
 		return stock;
 	}
 
+	public void logFile() throws IOException  {
+		File outputFile = new File("log.txt");
+		List<String> list = getList();
+		try(FileWriter logWriter = new FileWriter(outputFile, true)){
+			for(String str : list) {
+				logWriter.write(str);
+				logWriter.write("\n");
+			}
+		}
+	}
+	  //Audit file 
+	public void logFile(String itemName, String itemSlot, int itemPrice)
+	{
+		File logFile = new File("log.txt");
+		if(!logFile.exists())
+		{
+			try
+			{
+				logFile.createNewFile();
+			}
+			catch(Exception e)
+			
+			{
+				System.out.println();
+			}
+			
+			}
+		
+		try(PrintWriter pw = new PrintWriter(logFile))
+		{
+			
+			LocalDateTime dateTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-uuuu hh:mm a");
+			pw.print(formatter.format(dateTime) + " : ");
+			pw.print( + " : ");
+			pw.print(item + "   : ");
+			pw.print(itemSlot + "   : ");
+			pw.print(getBalance() + " : ");
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("There was a problem writing to the log file.");
+			
+		}
+
+
+	}
 }
+
+
+

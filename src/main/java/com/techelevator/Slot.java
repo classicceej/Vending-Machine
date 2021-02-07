@@ -11,12 +11,6 @@ public class Slot {
 		this.slotItem = slotItem;
 	}
 
-
-	public void sellOut() {
-		if(getSlotItem().getQuantity() == 0) {
-			SoldOut = true; //wrong
-		}
-	}
 	
 	
 	public Item getSlotItem() {
@@ -26,24 +20,9 @@ public class Slot {
 		return SoldOut;
 	}
 
-
-	public double getPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setSoldOut(boolean soldOut) {
+		this.SoldOut = true;
 	}
 
-
-	public int getQuantity() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	public Object getStock() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 }

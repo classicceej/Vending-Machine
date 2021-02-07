@@ -8,9 +8,9 @@ public class VendingMachine {
 
 	private Inventory contents;
 	private double currentMoneyProvided = 0;
+	private int fedMoney = 0;
 	private double change = 0;
 	private Customer user;
-	private double balance = 0;
 
 	public VendingMachine() {
 		this.contents = new Inventory();
@@ -27,6 +27,39 @@ public class VendingMachine {
 //		
 //	}
 
+	public void setCurrentMoneyProvided(double currentMoneyProvided) {
+		this.currentMoneyProvided = currentMoneyProvided;
+	}
+
+	public void feedMoney() {
+		currentMoneyProvided += getFedMoney();
+	}
+
+	public int getFedMoney() {
+		return fedMoney;
+	}
+
+	public void setFedMoney(int fedMoney) {
+		this.fedMoney = fedMoney;
+	}
+
+	public void DisplayVendingMachineItems() {
+
+		for (String k : getContents().getStock().keySet()) {
+			Slot v = getContents().getStock().get(k);
+			if (v.isSoldOut()) {
+				System.out
+						.print(v.getSlotItem().getName() + "\t\t" + v.getSlotItem().getName() + " IS SOLD OUT!" + "\n");
+			} else {
+				System.out.print(v.getSlotItem().getName() + "\t\t" + v.getSlotItem().getQuantity() + "\n");
+			}
+		}
+	}
+
+	public Customer getUser() {
+		return user;
+	}
+
 	public Inventory getContents() {
 		return contents;
 	}
@@ -39,41 +72,4 @@ public class VendingMachine {
 		return change;
 	}
 
-	public void DisplayVendingMachineItems() {
-		for (String k : getContents().getStock().keySet()) {
-			Slot v = getContents().getStock().get(k);
-			if (v.isSoldOut()) {
-				System.out.print(v.getSlotItem().getName() + "\t" + v.getSlotItem().getName() + " IS SOLD OUT!" + "\n");
-			} else {
-				System.out.print(v.getSlotItem().getName() + "\t" + v.getSlotItem().getQuantity() + "\n");
-			}
-		}
-	}
-
-	public Customer getUser() {
-		return user;
-	}
-
-	public void feedMoney() {
-		double addedMoney = 0;
-
-		balance += addedMoney;
-
-	}
-
-	public double getBalance() {
-		return balance;
-	}
-
-	public void giveChange() {
-		Double[] change = new Double[] { 0.25, 0.10, 0.05 };
-		String[] coinName = new String[] { "Quarter(s)", "Dime(s)", "Nickle(s)" };
-		for (int i = 0; i < change.length; i++) {
-			int counter;
-			counter = (int) (balance / change[i]);
-
-			balance -= (change[i] * counter);
-			System.out.println(counter + " " + coinName[i]);
-		}
-	}
 }

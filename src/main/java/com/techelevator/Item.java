@@ -4,7 +4,9 @@ package com.techelevator;
 
 public abstract class Item {
 
+
 	private  String name;
+
 	private double price;  //This may have to change to BigDecimal at some point
 	private String message;
 	private int quantity = 5;
@@ -16,7 +18,10 @@ public abstract class Item {
 	}
 
 
+
 	public  String getName() {
+
+	
 		return name;
 	}
 
@@ -36,14 +41,14 @@ public abstract class Item {
 	public int getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+
 	public String getSlot() {
 		return slot;
 	}
-	public void setSlot(String slot) {
-		this.slot = slot;
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 }
