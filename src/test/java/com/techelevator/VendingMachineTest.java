@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.*;
 import org.junit.Test;
 
@@ -67,6 +69,16 @@ public class VendingMachineTest {
 		
 		Assert.assertEquals(0.0, out.getCurrentMoneyProvided(), 0.0);
 	
+	}
+	
+	@Test
+	public void vending_make_change_40cents() {
+		out.setCurrentMoneyProvided(0.40);
+		out.makeChange();
+		
+		Assert.assertEquals(1, out.getCountQ());
+		Assert.assertEquals(1, out.getCountD());
+		Assert.assertEquals(1, out.getCountN());
 	}
 	
 	

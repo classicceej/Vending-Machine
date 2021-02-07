@@ -17,7 +17,10 @@ public abstract class Item {
 	}
 
 	public void countUp() {
-		count++;
+		count = 1;
+	}
+	public void countDown() {
+		count = 0;
 	}
 	
 	public String getName() {

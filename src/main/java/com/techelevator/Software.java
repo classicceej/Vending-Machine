@@ -211,11 +211,16 @@ public class Software {
 //											for (String k : thisMachine.getContents().getStock().keySet()) {
 //												Slot v = thisMachine.getContents().getStock().get(k);
 
-											if (info[0].contains(thisMachine.getContents().getStock()
+											if (info[0].contentEquals(thisMachine.getContents().getStock()
 													.get(selection.toUpperCase()).getSlotItem().getName())) {
+												// Diet Cola is Cola
+												
 												int toInt = Integer.parseInt(info[1]);
 												toInt += thisMachine.getContents().getStock()
 														.get(selection.toUpperCase()).getSlotItem().getCount();
+												
+												//Diet Cola gets Cola count
+												
 												info[1] = String.valueOf(toInt);
 											}
 											pws.println(info[0] + "|" + info[1]);
@@ -231,6 +236,9 @@ public class Software {
 								} catch (IOException e3) {
 									e3.printStackTrace();
 								}
+								
+								thisMachine.getContents().getStock().get(selection.toUpperCase()).getSlotItem()
+								.countDown();
 
 								try (PrintWriter pwi = new PrintWriter(new FileWriter(initSource, false))) {
 									try (Scanner repoS = new Scanner(SalesReport)) {
@@ -267,12 +275,7 @@ public class Software {
 						}
 					} else if (response2.contains("3")) {
 
-						BigDecimal Q = new BigDecimal("0.25");
-						BigDecimal D = new BigDecimal("0.10");
-						BigDecimal N = new BigDecimal("0.05");
-						int countQ = 0;
-						int countD = 0;
-						int countN = 0;
+
 
 						try (PrintWriter pw = new PrintWriter(new FileWriter(logFile, true))) {
 							pw.print(formatter.format(dateTime) + ":");
@@ -287,25 +290,15 @@ public class Software {
 
 							e1.printStackTrace();
 						}
+						
+						thisMachine.makeChange();
 
-						while ((Q.compareTo(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided())) <= 0)) {
-							BigDecimal newVal = BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()).subtract(Q);
-							thisMachine.setCurrentMoneyProvided(newVal.doubleValue());
-							countQ++;
-						}
-						while ((D.compareTo(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided())) <= 0)) {
-							BigDecimal newVal = BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()).subtract(D);
-							thisMachine.setCurrentMoneyProvided(newVal.doubleValue());
-							countD++;
-						}
-						while ((N.compareTo(BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided())) <= 0)) {
-							BigDecimal newVal = BigDecimal.valueOf(thisMachine.getCurrentMoneyProvided()).subtract(N);
-							thisMachine.setCurrentMoneyProvided(newVal.doubleValue());
-							countN++;
-						}
-
-						System.out.println("Your change is: \n" + countQ + " Quarters!\n" + countD + " Dimes!\n"
-								+ countN + " Nickles!");
+						System.out.println("Your change is: \n" + thisMachine.getCountQ() + " Quarters!\n" + thisMachine.getCountD() + " Dimes!\n"
+								+ thisMachine.getCountN() + " Nickles!");
+						
+						thisMachine.setCountQ(0);
+						thisMachine.setCountD(0);
+						thisMachine.setCountN(0);
 
 						purchaseMenu = false;
 					}
@@ -328,7 +321,7 @@ public class Software {
 						System.out.println(currentLine);
 
 						for (String k : thisMachine.getContents().getStock().keySet()) {
-							if (info[0].contains(thisMachine.getContents().getStock().get(k).getSlotItem().getName())) {
+							if (info[0].contentEquals(thisMachine.getContents().getStock().get(k).getSlotItem().getName())) {
 
 								double jDub = thisMachine.getContents().getStock().get(k).getSlotItem().getPrice();
 
@@ -338,7 +331,6 @@ public class Software {
 								BigDecimal BigH = new BigDecimal(hDub);
 								if (BigH != BigDecimal.valueOf(0.0)) {
 									BigDecimal Add = BigJ.multiply(BigH);
-
 									totalSales = (totalSales.add(Add));
 									newTotal = totalSales.doubleValue();
 								}
@@ -346,7 +338,7 @@ public class Software {
 						}
 
 					}
-					double roundOff = Math.round((newTotal) * 100.0) / 100.0;
+					double roundOff = Math.round((newTotal) * 100.00) / 100.00;
 					System.out.println("\nTOTAL SALES: \n");
 					System.out.println(roundOff);
 				} catch (FileNotFoundException e) {
