@@ -65,6 +65,8 @@ public class VendingMachine {
 	public double getCurrentMoneyProvided() {
 		return currentMoneyProvided;
 	}
+	
+
 
 }
 

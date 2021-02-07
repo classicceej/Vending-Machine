@@ -8,6 +8,7 @@ public abstract class Item {
 	private double price;  //This may have to change to BigDecimal at some point
 	private String message;
 	private int quantity = 5;
+	private int count = 0; 
 	private String slot;
 	
 	public Item(String name, double price) {
@@ -15,7 +16,10 @@ public abstract class Item {
 		this.price = price;
 	}
 
-
+	public void countUp() {
+		count++;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -39,6 +43,13 @@ public abstract class Item {
 
 	public String getSlot() {
 		return slot;
+		
+		
+	}
+
+	
+	public int getCount() {
+		return count;
 	}
 
 
