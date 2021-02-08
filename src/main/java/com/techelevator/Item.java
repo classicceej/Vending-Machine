@@ -4,24 +4,29 @@ package com.techelevator;
 
 public abstract class Item {
 
+	private String name;
 
-	private  String name;
-
-	private double price;  
+	private double price;
 	private String message;
 	private int quantity = 5;
+	private int count = 0;
 	private String slot;
-	
+
 	public Item(String name, double price) {
 		this.name = name;
 		this.price = price;
 	}
 
+	public void countUp() {
+		count = 1;
+	}
 
+	public void countDown() {
+		count = 0;
+	}
 
-	public  String getName() {
+	public String getName() {
 
-	
 		return name;
 	}
 
@@ -37,18 +42,21 @@ public abstract class Item {
 		this.message = message;
 	}
 
-
 	public int getQuantity() {
 		return quantity;
 	}
 
 	public String getSlot() {
 		return slot;
+
 	}
 
+	public int getCount() {
+		return count;
+	}
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 }
