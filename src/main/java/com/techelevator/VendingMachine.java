@@ -17,16 +17,6 @@ public class VendingMachine {
 
 	}
 
-	public void returnChange() {
-		currentMoneyProvided = 0;
-		change = 0;
-		// Change must be dispensed in smallest amount of coins
-	}
-
-//	public void feedMoney() {
-//		
-//	}
-
 	public void setCurrentMoneyProvided(double currentMoneyProvided) {
 		this.currentMoneyProvided = currentMoneyProvided;
 	}

@@ -7,7 +7,7 @@ public abstract class Item {
 
 	private  String name;
 
-	private double price;  //This may have to change to BigDecimal at some point
+	private double price;  
 	private String message;
 	private int quantity = 5;
 	private String slot;
